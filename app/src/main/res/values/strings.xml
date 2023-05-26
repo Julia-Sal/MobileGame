@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">PAM</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="imgBtnBackContentDescription">Back to menu button</string>
+    <string name="imgPlayerContentDescription">Player</string>
+    <string name="imgCircleContentDescription">Goal</string>
+    <string name="txtGameOver">Game Over!</string>
+    <string name="txtPoints">Points: </string>
+    <string name="title_activity_menu">menu</string>
+    <string name="imgBtnModelsContentDescription">Change model</string>
+    <string name="imgBtnPlayContentDescription">Start game</string>
+    <string name="imgBtnInfoContentDescription">Show some info</string>
+    <string name="title_activity_choose_model">chooseModel</string>
+</resources>
