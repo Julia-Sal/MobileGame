@@ -1,10 +1,12 @@
 package com.jsfsapps.pam
 
 import android.animation.ObjectAnimator
+import android.graphics.RectF
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.View
 import kotlin.random.Random
 import android.view.WindowManager
@@ -20,15 +22,33 @@ class GameMovement (private val imgPlayer: ImageView,
                     private val layout : FrameLayout
 ){
 
-        private val speed = 10f
+        private val speed = 20f
         private val angrySpiderSpeed = 60f
         private var screenWidth = 0f
         private var screenHeight = 0f
+        val hitboxMargin = 30f
+        var playerHitbox = RectF(0f,0f,0f,0f)
+        var spiderHitbox = RectF(1f,1f, 1f,1f)
+        private fun setHitbox(){
+            playerHitbox = RectF(
+                imgPlayer.x + hitboxMargin,
+                imgPlayer.y + hitboxMargin,
+                imgPlayer.x + imgPlayer.width - hitboxMargin,
+                imgPlayer.y + imgPlayer.height - hitboxMargin
+            )
 
+            spiderHitbox = RectF(
+                imgAngrySpider.x + hitboxMargin,
+                imgAngrySpider.y + hitboxMargin,
+                imgAngrySpider.x + imgAngrySpider.width - hitboxMargin,
+                imgAngrySpider.y + imgAngrySpider.height - hitboxMargin
+            )
+        }
 
         fun handleAccelerometerEvent(x: Float, y: Float) {
             spiderMovement(x, y)
             angrySpiderMovement(x, y)
+            setHitbox()
             checkIfObstackleGotTouched()
             gainPoints()
         }
@@ -36,39 +56,43 @@ class GameMovement (private val imgPlayer: ImageView,
         private fun spiderMovement(x: Float, y: Float) {
             if (imgPlayer.x >= screenWidth) {
                 imgPlayer.x = 0f + 1
+                animate(imgPlayer, x, y, 200, speed)
             } else if (imgPlayer.x <= 0f) {
                 imgPlayer.x = screenWidth - 1
+                animate(imgPlayer, x, y, 200, speed)
             } else if (imgPlayer.y >= screenHeight) {
                 imgPlayer.y = 0f + 1
-
-                val animator = ObjectAnimator.ofFloat(imgPlayer, "translationY", imgPlayer.y, screenHeight)
-                animator.duration = 200
-                animator.start()
-
+                animate(imgPlayer, x, y, 200, speed)
             } else if (imgPlayer.y <= 0f) {
                 imgPlayer.y = screenHeight - 1
+                animate(imgPlayer, x, y, 200, speed)
             } else {
-                imgPlayer.animate()
-                    .translationXBy(y * speed)
-                    .translationYBy(x * speed)
-                    .duration = 200
+                animate(imgPlayer, x, y, 200, speed)
             }
         }
+
+        private fun animate(imgModel: ImageView, x: Float, y: Float, dur: Long, speed: Float){
+            imgModel.animate()
+                .translationXBy(y * speed)
+                .translationYBy(x * speed)
+                .duration = dur
+    }
 
         private fun angrySpiderMovement(x: Float, y: Float) {
             if (imgAngrySpider.x >= screenWidth) {
                 imgAngrySpider.x = 0f + 1
+                animate(imgAngrySpider, -x, -y, 200, angrySpiderSpeed)
             } else if (imgAngrySpider.x <= 0f) {
                 imgAngrySpider.x = screenWidth - 1
+                animate(imgAngrySpider, -x, -y, 200, angrySpiderSpeed)
             } else if (imgAngrySpider.y >= screenHeight) {
                 imgAngrySpider.y = 0f + 1
+                animate(imgAngrySpider, -x, -y, 200, angrySpiderSpeed)
             } else if (imgAngrySpider.y <= 0f) {
                 imgAngrySpider.y = screenHeight - 1
+                animate(imgAngrySpider, -x, -y, 200, angrySpiderSpeed)
             } else {
-                imgAngrySpider.animate()
-                    .translationXBy(-y * angrySpiderSpeed)
-                    .translationYBy(-x * angrySpiderSpeed)
-                    .duration = 400
+                animate(imgAngrySpider, -x, -y, 200, angrySpiderSpeed)
             }
         }
 
@@ -82,7 +106,10 @@ class GameMovement (private val imgPlayer: ImageView,
         }
 
         private fun checkIfObstackleGotTouched() {
-            if (isCollision(imgPlayer, imgAngrySpider)) {
+            println(playerHitbox)
+            println(spiderHitbox)
+            if (RectF.intersects(playerHitbox, spiderHitbox)) {
+                println("playerHitbox")
                 txtGameOver.visibility = View.VISIBLE
                 txtGameOverPoints.visibility = View.VISIBLE
                 txtPoints.setText("0")
