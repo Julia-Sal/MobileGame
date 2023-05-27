@@ -28,8 +28,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/fullscreen_content_controls"
@@ -44,8 +43,7 @@
         <FrameLayout
             android:layout_width="500dp"
             android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:fitsSystemWindows="true">
+            android:layout_gravity="center">
 
 
             <ImageButton

@@ -24,16 +24,15 @@
          android:fitsSystemWindows. -->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
 
 
         <ImageButton
             android:id="@+id/imgBtnBackInfo"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/left_arrow_white"
             android:contentDescription="@string/imgBtnBackContentDescription"
             android:scaleType="fitCenter" />
@@ -50,8 +49,7 @@
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="300dp"
-                android:layout_gravity="center|bottom"
-                android:fitsSystemWindows="true">
+                android:layout_gravity="center">
 
                 <TextView
                     android:id="@+id/txtInfoTitle"
@@ -65,8 +63,7 @@
             <FrameLayout
                 android:layout_width="700dp"
                 android:layout_height="200dp"
-                android:layout_gravity="center"
-                android:fitsSystemWindows="true">
+                android:layout_gravity="center">
 
 
 
