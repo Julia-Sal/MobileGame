@@ -53,7 +53,6 @@ class FullscreenActivity : AppCompatActivity(){
             imgAngrySpider = binding.imgAngrySpider,
             txtPoints = binding.txtPoints,
             txtGameOver = binding.txtGameOver,
-            txtGameOverPoints = binding.txtGameOverPoints,
             layout = binding.webLayout
         )
     }

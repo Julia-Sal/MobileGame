@@ -17,7 +17,6 @@ class GameMovement (private val imgPlayer: ImageView,
                     private val imgAngrySpider: ImageView,
                     private val txtPoints: EditText,
                     private val txtGameOver: TextView,
-                    private val txtGameOverPoints: TextView,
                     private val layout : FrameLayout
 ){
         private val speed = 20f
@@ -49,7 +48,9 @@ class GameMovement (private val imgPlayer: ImageView,
             angrySpiderMovement(x, y)
             setHitbox()
             checkIfObstackleGotTouched()
-            gainPoints()
+            if(txtGameOver.visibility == View.INVISIBLE) {
+                gainPoints()
+            }
         }
 
         private fun spiderMovement(x: Float, y: Float) {
@@ -104,12 +105,10 @@ class GameMovement (private val imgPlayer: ImageView,
             }
         }
 
+
         private fun checkIfObstackleGotTouched() {
             if (RectF.intersects(playerHitbox, spiderHitbox)) {
-                println("playerHitbox")
                 txtGameOver.visibility = View.VISIBLE
-                txtGameOverPoints.visibility = View.VISIBLE
-                txtPoints.setText("0")
             }
         }
 
@@ -139,7 +138,7 @@ class GameMovement (private val imgPlayer: ImageView,
 
         fun hideGameOverViews() {
             txtGameOver.visibility = View.INVISIBLE
-            txtGameOverPoints.visibility = View.INVISIBLE
+            txtPoints.setText("0")
         }
 
         fun updateScreenSize(screenWidth: Float, screenHeight: Float) {
