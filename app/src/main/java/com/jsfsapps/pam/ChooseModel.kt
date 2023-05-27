@@ -1,6 +1,5 @@
 package com.jsfsapps.pam
 
-import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -11,21 +10,25 @@ import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowInsets
-import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.jsfsapps.pam.databinding.ActivityMenuBinding
+import androidx.appcompat.app.AppCompatActivity
+import com.jsfsapps.pam.databinding.ActivityChooseModelBinding
+import kotlin.reflect.typeOf
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-class menu : AppCompatActivity() {
+class ChooseModel : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMenuBinding
+    private lateinit var binding: ActivityChooseModelBinding
     private lateinit var fullscreenContent: TextView
     private lateinit var fullscreenContentControls: LinearLayout
     private val hideHandler = Handler(Looper.myLooper()!!)
+
+    private lateinit var managePlayer: ManagePlayer
+
 
     @SuppressLint("InlinedApi")
     private val hidePart2Runnable = Runnable {
@@ -51,13 +54,7 @@ class menu : AppCompatActivity() {
         fullscreenContentControls.visibility = View.VISIBLE
     }
     private var isFullscreen: Boolean = false
-
     private val hideRunnable = Runnable { hide() }
-
-    private lateinit var imgBtnPlay: ImageButton
-    private lateinit var imgBtnInfo: ImageButton
-    private lateinit var imgBtnModel: ImageButton
-
     private val delayHideTouchListener = View.OnTouchListener { view, motionEvent ->
         when (motionEvent.action) {
             MotionEvent.ACTION_DOWN -> if (AUTO_HIDE) {
@@ -74,9 +71,7 @@ class menu : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
-
-
-        binding = ActivityMenuBinding.inflate(layoutInflater)
+        binding = ActivityChooseModelBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         isFullscreen = true
@@ -84,23 +79,18 @@ class menu : AppCompatActivity() {
         fullscreenContent.setOnClickListener { toggle() }
         fullscreenContentControls = binding.fullscreenContentControls
 
-        imgBtnPlay = binding.btnPlay
-        imgBtnPlay.setOnClickListener {
-            val intent = Intent(this, FullscreenActivity::class.java)
+        managePlayer = ManagePlayer()
+
+        binding.imgBtnBackCM.setOnClickListener {
+            val intent = Intent(this, Menu::class.java)
             startActivity(intent)
         }
 
-        imgBtnInfo = binding.btnInfo
-        imgBtnInfo.setOnClickListener {
-            val intent = Intent(this, menu::class.java)
-            startActivity(intent)
+        binding.btnSpiderModel1.setOnClickListener {
+
         }
 
-        imgBtnModel = binding.btnSpider
-        imgBtnModel.setOnClickListener {
-            val intent = Intent(this, chooseModel::class.java)
-            startActivity(intent)
-        }
+
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

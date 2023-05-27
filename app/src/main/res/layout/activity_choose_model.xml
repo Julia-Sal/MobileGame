@@ -6,21 +6,11 @@
     android:layout_height="match_parent"
     android:background="?attr/fullscreenBackgroundColor"
     android:theme="@style/ThemeOverlay.PAM.FullscreenContainer"
-    tools:context=".chooseModel">
+    tools:context=".ChooseModel">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
-    <ImageButton
-        android:id="@+id/imgBtnBackCM"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/imgBtnBackContentDescription"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/pam_left_arrow" />
 
     <TextView
         android:id="@+id/fullscreen_content"
@@ -35,6 +25,17 @@
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
+    <ImageButton
+        android:id="@+id/imgBtnBackCM"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/imgBtnBackContentDescription"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/pam_left_arrow" />
+
     <FrameLayout
         android:layout_width="500dp"
         android:layout_height="100dp"

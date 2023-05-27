@@ -51,16 +51,7 @@
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/pam_left_arrow" />
 
-        <ImageView
-            android:id="@+id/imgPlayer"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/imgPlayerContentDescription"
-            android:gravity="center"
-            app:srcCompat="@drawable/spider" />
+
 
         <ImageView
             android:id="@+id/imgFly"
@@ -82,7 +73,8 @@
             android:inputType="number"
             android:text="0"
             android:textColor="@color/white"
-            android:textSize="50dp" />
+            android:textSize="50dp"
+            android:enabled="false"/>
 
         <ImageView
             android:id="@+id/imgAngrySpider"
@@ -114,6 +106,18 @@
             android:layout_gravity="center"
             android:layout_marginTop="100dp"
             android:textColor="@color/white"/>
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="30dp"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/change_mode"
+            android:layout_gravity="right|bottom"
+            android:gravity="right"/>
 
 
     </FrameLayout>

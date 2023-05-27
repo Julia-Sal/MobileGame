@@ -1,16 +1,15 @@
 package com.jsfsapps.pam
 
-import android.animation.ObjectAnimator
+import android.app.Activity
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.RectF
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.util.DisplayMetrics
-import android.util.Log
+import android.util.TypedValue
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import kotlin.random.Random
-import android.view.WindowManager
-import android.view.ViewGroup.LayoutParams
 import android.widget.*
 
 class GameMovement (private val imgPlayer: ImageView,
@@ -21,7 +20,6 @@ class GameMovement (private val imgPlayer: ImageView,
                     private val txtGameOverPoints: TextView,
                     private val layout : FrameLayout
 ){
-
         private val speed = 20f
         private val angrySpiderSpeed = 60f
         private var screenWidth = 0f
@@ -29,6 +27,7 @@ class GameMovement (private val imgPlayer: ImageView,
         val hitboxMargin = 30f
         var playerHitbox = RectF(0f,0f,0f,0f)
         var spiderHitbox = RectF(1f,1f, 1f,1f)
+        lateinit var model: Bitmap
         private fun setHitbox(){
             playerHitbox = RectF(
                 imgPlayer.x + hitboxMargin,
@@ -154,4 +153,6 @@ class GameMovement (private val imgPlayer: ImageView,
             imgPlayer.x = 0f
             imgPlayer.y = 0f
         }
+
+
 }

@@ -12,4 +12,5 @@
     <string name="imgBtnPlayContentDescription">Start game</string>
     <string name="imgBtnInfoContentDescription">Show some info</string>
     <string name="title_activity_choose_model">chooseModel</string>
+    <string name="title_activity_map_labyrinth_first_level">MapLabyrinthFirstLevel</string>
 </resources>

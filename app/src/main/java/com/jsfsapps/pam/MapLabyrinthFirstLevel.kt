@@ -2,8 +2,6 @@ package com.jsfsapps.pam
 
 import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -11,23 +9,20 @@ import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowInsets
-import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.jsfsapps.pam.databinding.ActivityChooseModelBinding
+import com.jsfsapps.pam.databinding.ActivityMapLabyrinthFirstLevelBinding
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-class chooseModel : AppCompatActivity() {
+class MapLabyrinthFirstLevel : AppCompatActivity() {
 
-    private lateinit var binding: ActivityChooseModelBinding
+    private lateinit var binding: ActivityMapLabyrinthFirstLevelBinding
     private lateinit var fullscreenContent: TextView
     private lateinit var fullscreenContentControls: LinearLayout
     private val hideHandler = Handler(Looper.myLooper()!!)
-
-    private lateinit var imgBtnBack: ImageButton
 
     @SuppressLint("InlinedApi")
     private val hidePart2Runnable = Runnable {
@@ -71,9 +66,8 @@ class chooseModel : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
 
-        binding = ActivityChooseModelBinding.inflate(layoutInflater)
+        binding = ActivityMapLabyrinthFirstLevelBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         isFullscreen = true
@@ -81,11 +75,7 @@ class chooseModel : AppCompatActivity() {
         fullscreenContent.setOnClickListener { toggle() }
         fullscreenContentControls = binding.fullscreenContentControls
 
-        imgBtnBack = binding.imgBtnBackCM
-        imgBtnBack.setOnClickListener {
-            val intent = Intent(this, menu::class.java)
-            startActivity(intent)
-        }
+
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

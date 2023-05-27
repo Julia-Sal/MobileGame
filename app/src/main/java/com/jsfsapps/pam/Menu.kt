@@ -1,12 +1,9 @@
-package com.jsfsapps  .pam
+package com.jsfsapps.pam
 
+import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -14,75 +11,21 @@ import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowInsets
-import androidx.appcompat.app.AppCompatActivity
-import com.jsfsapps.pam.databinding.ActivityFullscreenBinding
-import android.widget.*
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.TextView
+import com.jsfsapps.pam.databinding.ActivityMenuBinding
 
+/**
+ * An example full-screen activity that shows and hides the system UI (i.e.
+ * status bar and navigation/system bar) with user interaction.
+ */
+class Menu : AppCompatActivity() {
 
-class FullscreenActivity : AppCompatActivity(){
-
-    private lateinit var binding: ActivityFullscreenBinding
+    private lateinit var binding: ActivityMenuBinding
     private lateinit var fullscreenContent: TextView
     private lateinit var fullscreenContentControls: LinearLayout
     private val hideHandler = Handler(Looper.myLooper()!!)
-
-
-    private lateinit var gameMovement: GameMovement
-    private lateinit var managePlayer: ManagePlayer
-    private var mSensorManager: SensorManager? = null
-    private var mAccelerometer: Sensor? = null
-
-
-    private val mSensorEventListener = object : SensorEventListener {
-        override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
-            // implementacja metody onAccuracyChanged
-        }
-
-        override fun onSensorChanged(event: SensorEvent) {
-            if (event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
-                gameMovement.handleAccelerometerEvent(event.values[0], event.values[1]);
-                }
-            }
-        }
-
-    private fun setupGame(imgPlayer: ImageView) {
-        gameMovement = GameMovement(
-            imgPlayer = imgPlayer,
-            imgFly = binding.imgFly,
-            imgAngrySpider = binding.imgAngrySpider,
-            txtPoints = binding.txtPoints,
-            txtGameOver = binding.txtGameOver,
-            txtGameOverPoints = binding.txtGameOverPoints,
-            layout = binding.webLayout
-        )
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) //lock orientation
-        binding = ActivityFullscreenBinding.inflate(layoutInflater)
-        initializeViews()
-        managePlayer = ManagePlayer()
-
-        val container = findViewById<FrameLayout>(R.id.mainLayout) // Znajdź kontener LinearLayout
-
-        var imgPlayer = managePlayer.createPlayer(this, container)
-        setupGame(imgPlayer)
-
-        //game sensors
-        mSensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
-        mAccelerometer = mSensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-
-        binding.txtGameOver.setOnClickListener {
-            gameMovement.hideGameOverViews()
-        }
-        binding.imgBtnBack.setOnClickListener {
-            val intent = Intent(this, Menu::class.java)
-            startActivity(intent)
-        }
-
-
-    }
 
     @SuppressLint("InlinedApi")
     private val hidePart2Runnable = Runnable {
@@ -103,7 +46,13 @@ class FullscreenActivity : AppCompatActivity(){
         fullscreenContentControls.visibility = View.VISIBLE
     }
     private var isFullscreen: Boolean = false
+
     private val hideRunnable = Runnable { hide() }
+
+    private lateinit var imgBtnPlay: ImageButton
+    private lateinit var imgBtnInfo: ImageButton
+    private lateinit var imgBtnModel: ImageButton
+
     private val delayHideTouchListener = View.OnTouchListener { view, motionEvent ->
         when (motionEvent.action) {
             MotionEvent.ACTION_DOWN -> if (AUTO_HIDE) {
@@ -115,47 +64,49 @@ class FullscreenActivity : AppCompatActivity(){
         }
         false
     }
-    private fun initializeViews() {
-        binding = ActivityFullscreenBinding.inflate(layoutInflater)
+
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+
+
+        binding = ActivityMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        isFullscreen = true
         fullscreenContent = binding.fullscreenContent
         fullscreenContent.setOnClickListener { toggle() }
         fullscreenContentControls = binding.fullscreenContentControls
-    }
 
-    @SuppressLint("ClickableViewAccessibility")
+        imgBtnPlay = binding.btnPlay
+        imgBtnPlay.setOnClickListener {
+            val intent = Intent(this, FullscreenActivity::class.java)
+            startActivity(intent)
+        }
 
+        imgBtnInfo = binding.btnInfo
+        imgBtnInfo.setOnClickListener {
+            val intent = Intent(this, Menu::class.java)
+            startActivity(intent)
+        }
 
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) {
-
-            val layout = binding.webLayout
-            var screenWidth = layout.width
-            var screenHeight = layout.height
-            gameMovement.updateScreenSize(screenWidth.toFloat(), screenHeight.toFloat())
+        imgBtnModel = binding.btnSpider
+        imgBtnModel.setOnClickListener {
+            val intent = Intent(this, ChooseModel::class.java)
+            startActivity(intent)
         }
     }
-    override fun onResume() {
-        super.onResume()
-        gameMovement.resetPlayerPosition()
-        mSensorManager?.registerListener(
-            mSensorEventListener,
-            mAccelerometer,
-            SensorManager.SENSOR_DELAY_NORMAL
-        )
-    }
-    override fun onPause() {
-        super.onPause()
-        mSensorManager?.unregisterListener(mSensorEventListener)
-    }
+
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
+        // Trigger the initial hide() shortly after the activity has been
+        // created, to briefly hint to the user that UI controls
+        // are available.
         delayedHide(100)
     }
+
     private fun toggle() {
         if (isFullscreen) {
             hide()
@@ -163,15 +114,20 @@ class FullscreenActivity : AppCompatActivity(){
             show()
         }
     }
+
     private fun hide() {
+        // Hide UI first
         supportActionBar?.hide()
         fullscreenContentControls.visibility = View.GONE
         isFullscreen = false
 
+        // Schedule a runnable to remove the status and navigation bar after a delay
         hideHandler.removeCallbacks(showPart2Runnable)
         hideHandler.postDelayed(hidePart2Runnable, UI_ANIMATION_DELAY.toLong())
     }
+
     private fun show() {
+        // Show the system bar
         if (Build.VERSION.SDK_INT >= 30) {
             fullscreenContent.windowInsetsController?.show(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
         } else {
@@ -181,17 +137,37 @@ class FullscreenActivity : AppCompatActivity(){
         }
         isFullscreen = true
 
+        // Schedule a runnable to display UI elements after a delay
         hideHandler.removeCallbacks(hidePart2Runnable)
         hideHandler.postDelayed(showPart2Runnable, UI_ANIMATION_DELAY.toLong())
     }
+
+    /**
+     * Schedules a call to hide() in [delayMillis], canceling any
+     * previously scheduled calls.
+     */
     private fun delayedHide(delayMillis: Int) {
         hideHandler.removeCallbacks(hideRunnable)
         hideHandler.postDelayed(hideRunnable, delayMillis.toLong())
     }
+
     companion object {
+        /**
+         * Whether or not the system UI should be auto-hidden after
+         * [AUTO_HIDE_DELAY_MILLIS] milliseconds.
+         */
         private const val AUTO_HIDE = true
+
+        /**
+         * If [AUTO_HIDE] is set, the number of milliseconds to wait after
+         * user interaction before hiding the system UI.
+         */
         private const val AUTO_HIDE_DELAY_MILLIS = 3000
+
+        /**
+         * Some older devices needs a small delay between UI widget updates
+         * and a change of the status and navigation bar.
+         */
         private const val UI_ANIMATION_DELAY = 300
     }
 }
-
