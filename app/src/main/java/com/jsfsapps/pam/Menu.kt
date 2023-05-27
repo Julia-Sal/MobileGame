@@ -79,23 +79,21 @@ class Menu : AppCompatActivity() {
         fullscreenContent.setOnClickListener { toggle() }
         fullscreenContentControls = binding.fullscreenContentControls
 
-        imgBtnPlay = binding.btnPlay
-        imgBtnPlay.setOnClickListener {
+
+        binding.btnPlay.setOnClickListener {
             val intent = Intent(this, FullscreenActivity::class.java)
             startActivity(intent)
         }
 
-        imgBtnInfo = binding.btnInfo
-        imgBtnInfo.setOnClickListener {
-            val intent = Intent(this, Menu::class.java)
+        binding.btnInfo.setOnClickListener {
+            val intent = Intent(this, Info::class.java)
             startActivity(intent)
         }
 
-        imgBtnModel = binding.btnSpider
-        imgBtnModel.setOnClickListener {
-            val intent = Intent(this, ChooseModel::class.java)
-            startActivity(intent)
+        binding.btnCancel.setOnClickListener {
+            finishAffinity()
         }
+
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

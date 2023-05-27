@@ -49,13 +49,13 @@
 
 
             <ImageButton
-                android:id="@+id/btnSpider"
+                android:id="@+id/btnCancel"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@android:color/transparent"
+                android:contentDescription="@string/imgBtnModelsContentDescription"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/spider"
-                android:contentDescription="@string/imgBtnModelsContentDescription"/>
+                app:srcCompat="@drawable/cancel" />
 
             <ImageButton
                 android:id="@+id/btnPlay"

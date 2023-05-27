@@ -1,5 +1,6 @@
 package com.jsfsapps.pam
 
+import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -12,23 +13,18 @@ import android.view.View
 import android.view.WindowInsets
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import com.jsfsapps.pam.databinding.ActivityChooseModelBinding
-import kotlin.reflect.typeOf
+import com.jsfsapps.pam.databinding.ActivityInfoBinding
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-class ChooseModel : AppCompatActivity() {
+class Info : AppCompatActivity() {
 
-    private lateinit var binding: ActivityChooseModelBinding
+    private lateinit var binding: ActivityInfoBinding
     private lateinit var fullscreenContent: TextView
     private lateinit var fullscreenContentControls: LinearLayout
     private val hideHandler = Handler(Looper.myLooper()!!)
-
-    private lateinit var managePlayer: ManagePlayer
-
 
     @SuppressLint("InlinedApi")
     private val hidePart2Runnable = Runnable {
@@ -54,7 +50,14 @@ class ChooseModel : AppCompatActivity() {
         fullscreenContentControls.visibility = View.VISIBLE
     }
     private var isFullscreen: Boolean = false
+
     private val hideRunnable = Runnable { hide() }
+
+    /**
+     * Touch listener to use for in-layout UI controls to delay hiding the
+     * system UI. This is to prevent the jarring behavior of controls going away
+     * while interacting with activity UI.
+     */
     private val delayHideTouchListener = View.OnTouchListener { view, motionEvent ->
         when (motionEvent.action) {
             MotionEvent.ACTION_DOWN -> if (AUTO_HIDE) {
@@ -71,25 +74,22 @@ class ChooseModel : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
-        binding = ActivityChooseModelBinding.inflate(layoutInflater)
+        binding = ActivityInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         isFullscreen = true
+
         fullscreenContent = binding.fullscreenContent
         fullscreenContent.setOnClickListener { toggle() }
+
         fullscreenContentControls = binding.fullscreenContentControls
 
-        managePlayer = ManagePlayer()
-
-        binding.imgBtnBackCM.setOnClickListener {
+        binding.imgBtnBackInfo.setOnClickListener {
             val intent = Intent(this, Menu::class.java)
             startActivity(intent)
         }
-
-        binding.btnSpiderModel1.setOnClickListener {
-
-        }
-
 
     }
 

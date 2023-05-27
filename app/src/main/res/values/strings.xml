@@ -13,4 +13,8 @@
     <string name="imgBtnInfoContentDescription">Show some info</string>
     <string name="title_activity_choose_model">chooseModel</string>
     <string name="title_activity_map_labyrinth_first_level">MapLabyrinthFirstLevel</string>
+    <string name="title_activity_info">Info</string>
+    <string name="txtInfoAuthor">Julia Sałacka</string>
+    <string name="txtInfoGroup">PAW3</string>
+    <string name="txtInfoTitle">Fake Labyrinth</string>
 </resources>

@@ -105,8 +105,6 @@ class GameMovement (private val imgPlayer: ImageView,
         }
 
         private fun checkIfObstackleGotTouched() {
-            println(playerHitbox)
-            println(spiderHitbox)
             if (RectF.intersects(playerHitbox, spiderHitbox)) {
                 println("playerHitbox")
                 txtGameOver.visibility = View.VISIBLE

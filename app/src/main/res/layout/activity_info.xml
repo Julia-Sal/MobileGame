@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/fullscreenBackgroundColor"
+    android:theme="@style/ThemeOverlay.PAM.FullscreenContainer"
+    tools:context=".Info">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+    <TextView
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:keepScreenOn="true"
+        android:text="@string/dummy_content"
+        android:textColor="?attr/fullscreenTextColor"
+        android:textSize="50sp"
+        android:textStyle="bold" />
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+
+        <ImageButton
+            android:id="@+id/imgBtnBackInfo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/left_arrow_white"
+            android:contentDescription="@string/imgBtnBackContentDescription"
+            android:scaleType="fitCenter" />
+
+        <LinearLayout
+                android:id="@+id/fullscreen_content_controls"
+                style="@style/Widget.Theme.PAM.ButtonBar.Fullscreen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:orientation="horizontal"
+                tools:ignore="UselessParent"/>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="300dp"
+                android:layout_gravity="center|bottom"
+                android:fitsSystemWindows="true">
+
+                <TextView
+                    android:id="@+id/txtInfoTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|top"
+                    android:text="@string/txtInfoTitle"
+                    android:textSize="70dp"
+                    android:textColor="@color/white"/>
+
+            <FrameLayout
+                android:layout_width="700dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:fitsSystemWindows="true">
+
+
+
+                <TextView
+                    android:id="@+id/txtInfoAuthor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/txtInfoAuthor"
+                    android:textSize="50dp"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/txtInfoGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|bottom"
+                    android:text="@string/txtInfoGroup"
+                    android:textSize="50dp"
+                    android:textColor="@color/white"/>
+            </FrameLayout>
+        </FrameLayout>
+    </FrameLayout>
+</FrameLayout>

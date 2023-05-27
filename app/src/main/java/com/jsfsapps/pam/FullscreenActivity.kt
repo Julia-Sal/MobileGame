@@ -29,9 +29,10 @@ class FullscreenActivity : AppCompatActivity(){
 
     private lateinit var gameMovement: GameMovement
     private lateinit var managePlayer: ManagePlayer
+    private lateinit var manageMap: ManageMap
     private var mSensorManager: SensorManager? = null
     private var mAccelerometer: Sensor? = null
-
+    private var modeType = true
 
     private val mSensorEventListener = object : SensorEventListener {
         override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
@@ -63,7 +64,7 @@ class FullscreenActivity : AppCompatActivity(){
         binding = ActivityFullscreenBinding.inflate(layoutInflater)
         initializeViews()
         managePlayer = ManagePlayer()
-
+        manageMap = ManageMap()
         val container = findViewById<FrameLayout>(R.id.mainLayout) // Znajdź kontener LinearLayout
 
         var imgPlayer = managePlayer.createPlayer(this, container)
@@ -79,6 +80,11 @@ class FullscreenActivity : AppCompatActivity(){
         binding.imgBtnBack.setOnClickListener {
             val intent = Intent(this, Menu::class.java)
             startActivity(intent)
+        }
+        binding.btnChangeMode.setOnClickListener{
+            manageMap.setMap(binding.webLayout, modeType, binding.txtPoints, binding.imgBtnBack)
+            modeType = !modeType
+
         }
 
 
