@@ -26,6 +26,7 @@ class Info : AppCompatActivity() {
     private lateinit var fullscreenContent: TextView
     private lateinit var fullscreenContentControls: LinearLayout
     private val hideHandler = Handler(Looper.myLooper()!!)
+    private var isFullscreen: Boolean = false
 
     @SuppressLint("InlinedApi")
     private val hidePart2Runnable = Runnable {
@@ -45,10 +46,6 @@ class Info : AppCompatActivity() {
                         View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
         }
     }
-    private var isFullscreen: Boolean = false
-
-
-
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,11 +54,8 @@ class Info : AppCompatActivity() {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         hideSystemUI()
         setContentView(binding.root)
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         isFullscreen = true
-
         fullscreenContent = binding.fullscreenContent
 
         fullscreenContentControls = binding.fullscreenContentControls
@@ -72,12 +66,10 @@ class Info : AppCompatActivity() {
         }
 
     }
-
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
         hide()
     }
-
     private fun hide() {
         // Hide UI first
         supportActionBar?.hide()
@@ -86,9 +78,6 @@ class Info : AppCompatActivity() {
 
         hideHandler.postDelayed(hidePart2Runnable, UI_ANIMATION_DELAY.toLong())
     }
-
-
-
     companion object {
 
         private const val AUTO_HIDE = true
@@ -97,17 +86,14 @@ class Info : AppCompatActivity() {
 
         private const val UI_ANIMATION_DELAY = 300
     }
-
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         hideSystemUI()
     }
-
     override fun onResume() {
         super.onResume()
         hideSystemUI()
     }
-
     private fun hideSystemUI() {
         window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION

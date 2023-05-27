@@ -26,15 +26,12 @@ class FullscreenActivity : AppCompatActivity(){
     private lateinit var fullscreenContent: TextView
     private lateinit var fullscreenContentControls: LinearLayout
     private val hideHandler = Handler(Looper.myLooper()!!)
-
-
     private lateinit var gameMovement: GameMovement
     private lateinit var managePlayer: ManagePlayer
     private lateinit var manageMap: ManageMap
     private var mSensorManager: SensorManager? = null
     private var mAccelerometer: Sensor? = null
     private var modeType = true
-
     private val mSensorEventListener = object : SensorEventListener {
         override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
             // implementacja metody onAccuracyChanged
@@ -46,6 +43,7 @@ class FullscreenActivity : AppCompatActivity(){
                 }
             }
         }
+    private var isFullscreen: Boolean = false
 
     private fun setupGame(imgPlayer: ImageView) {
         gameMovement = GameMovement(
@@ -57,16 +55,15 @@ class FullscreenActivity : AppCompatActivity(){
             layout = binding.webLayout
         )
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) //lock orientation
         binding = ActivityFullscreenBinding.inflate(layoutInflater)
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN //hide navigation bar
         initializeViews()
         managePlayer = ManagePlayer()
         manageMap = ManageMap()
-        val container = findViewById<FrameLayout>(R.id.mainLayout) // Znajdź kontener LinearLayout
+        val container = findViewById<FrameLayout>(R.id.mainLayout) // Find container LinearLayout
 
         var imgPlayer = managePlayer.createPlayer(this, container)
         setupGame(imgPlayer)
@@ -87,10 +84,7 @@ class FullscreenActivity : AppCompatActivity(){
             modeType = !modeType
 
         }
-
-
     }
-
     @SuppressLint("InlinedApi")
     private val hidePart2Runnable = Runnable {
         if (Build.VERSION.SDK_INT >= 30) {
@@ -106,8 +100,6 @@ class FullscreenActivity : AppCompatActivity(){
         }
     }
 
-    private var isFullscreen: Boolean = false
-
     private fun initializeViews() {
         binding = ActivityFullscreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -115,10 +107,6 @@ class FullscreenActivity : AppCompatActivity(){
         fullscreenContent = binding.fullscreenContent
         fullscreenContentControls = binding.fullscreenContentControls
     }
-
-
-
-
     override fun onWindowFocusChanged(hasFocus: Boolean) {
 
         super.onWindowFocusChanged(hasFocus)
@@ -155,12 +143,10 @@ class FullscreenActivity : AppCompatActivity(){
 
         hideHandler.postDelayed(hidePart2Runnable, UI_ANIMATION_DELAY.toLong())
     }
-
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         hideSystemUI()
     }
-
     private fun hideSystemUI() {
         window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -169,7 +155,6 @@ class FullscreenActivity : AppCompatActivity(){
                 or View.SYSTEM_UI_FLAG_FULLSCREEN
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
     }
-
     companion object {
         private const val AUTO_HIDE = true
         private const val AUTO_HIDE_DELAY_MILLIS = 3000

@@ -23,7 +23,7 @@ class Menu : AppCompatActivity() {
     private lateinit var fullscreenContent: TextView
     private lateinit var fullscreenContentControls: LinearLayout
     private val hideHandler = Handler(Looper.myLooper()!!)
-
+    private var isFullscreen: Boolean = false
     @SuppressLint("InlinedApi")
     private val hidePart2Runnable = Runnable {
         if (Build.VERSION.SDK_INT >= 30) {
@@ -38,8 +38,6 @@ class Menu : AppCompatActivity() {
                         View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
         }
     }
-    private var isFullscreen: Boolean = false
-
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,19 +68,16 @@ class Menu : AppCompatActivity() {
         }
 
     }
-
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
         hide()
     }
-
     private fun hide() {
         supportActionBar?.hide()
         fullscreenContentControls.visibility = View.GONE
         isFullscreen = false
         hideHandler.postDelayed(hidePart2Runnable, UI_ANIMATION_DELAY.toLong())
     }
-
     private fun hideSystemUI() {
         window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -91,17 +86,14 @@ class Menu : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_FULLSCREEN
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
     }
-
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         hideSystemUI()
     }
-
     override fun onResume() {
         super.onResume()
         hideSystemUI()
     }
-
     companion object {
         private const val AUTO_HIDE = true
 

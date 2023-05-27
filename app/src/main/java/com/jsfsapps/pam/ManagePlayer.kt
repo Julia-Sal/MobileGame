@@ -12,9 +12,6 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 class ManagePlayer{
-
-    public var currentModel = R.drawable.current_model
-
     fun createPlayer(context: Context, container: FrameLayout): ImageView{
 
         val imageView = ImageView(context)
@@ -25,13 +22,11 @@ class ManagePlayer{
         )
         imageView.setBackgroundResource(android.R.color.transparent)
         imageView.contentDescription = context.getString(R.string.imgPlayerContentDescription)
-        println(currentModel)
-        imageView.setImageResource(currentModel)
+        imageView.setImageResource(R.drawable.current_model)
 
         container.addView(imageView)
         return imageView
     }
-
     private fun convertDpToPx(context: Context, dp: Int): Int {
         val density = context.resources.displayMetrics.density
         return (dp * density).toInt()

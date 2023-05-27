@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">PAM</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="imgBtnBackContentDescription">Przycisk powrotu do menu</string>
+    <string name="imgPlayerContentDescription">Gracz</string>
+    <string name="imgCircleContentDescription">Cel</string>
+    <string name="txtGameOver">Koniec gry!</string>
+    <string name="txtPoints">Punkty: </string>
+    <string name="title_activity_menu">Menu</string>
+    <string name="imgBtnModelsContentDescription">Zmień model</string>
+    <string name="imgBtnPlayContentDescription">Rozpocznij grę</string>
+    <string name="imgBtnInfoContentDescription">Pokaż mi informacje</string>
+    <string name="title_activity_choose_model">chooseModel</string>
+    <string name="title_activity_map_labyrinth_first_level">MapLabyrinthFirstLevel</string>
+    <string name="title_activity_info">Info</string>
+    <string name="txtInfoAuthor">Julia Sałacka</string>
+    <string name="txtInfoGroup">PAW3</string>
+    <string name="txtInfoTitle">Fake Labyrinth</string>
+</resources>

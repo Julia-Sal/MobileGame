@@ -19,6 +19,7 @@ class GameMovement (private val imgPlayer: ImageView,
                     private val txtGameOver: TextView,
                     private val layout : FrameLayout
 ){
+
         private val speed = 20f
         private val angrySpiderSpeed = 60f
         private var screenWidth = 0f
@@ -27,6 +28,7 @@ class GameMovement (private val imgPlayer: ImageView,
         var playerHitbox = RectF(0f,0f,0f,0f)
         var spiderHitbox = RectF(1f,1f, 1f,1f)
         lateinit var model: Bitmap
+
         private fun setHitbox(){
             playerHitbox = RectF(
                 imgPlayer.x + hitboxMargin,
@@ -42,7 +44,6 @@ class GameMovement (private val imgPlayer: ImageView,
                 imgAngrySpider.y + imgAngrySpider.height - hitboxMargin
             )
         }
-
         fun handleAccelerometerEvent(x: Float, y: Float) {
             spiderMovement(x, y)
             angrySpiderMovement(x, y)
@@ -52,7 +53,6 @@ class GameMovement (private val imgPlayer: ImageView,
                 gainPoints()
             }
         }
-
         private fun spiderMovement(x: Float, y: Float) {
             if (imgPlayer.x >= screenWidth) {
                 imgPlayer.x = 0f + 1
@@ -70,14 +70,12 @@ class GameMovement (private val imgPlayer: ImageView,
                 animate(imgPlayer, x, y, 200, speed)
             }
         }
-
         private fun animate(imgModel: ImageView, x: Float, y: Float, dur: Long, speed: Float){
             imgModel.animate()
                 .translationXBy(y * speed)
                 .translationYBy(x * speed)
                 .duration = dur
     }
-
         private fun angrySpiderMovement(x: Float, y: Float) {
             if (imgAngrySpider.x >= screenWidth) {
                 imgAngrySpider.x = 0f + 1
@@ -95,7 +93,6 @@ class GameMovement (private val imgPlayer: ImageView,
                 animate(imgAngrySpider, -x, -y, 200, angrySpiderSpeed)
             }
         }
-
         private fun gainPoints() {
             if (isCollision(imgPlayer, imgFly)) {
                 val currentValue = txtPoints.text.toString().toInt()
@@ -104,14 +101,11 @@ class GameMovement (private val imgPlayer: ImageView,
                 imgFly.animate().rotation(Random.nextInt(-50, 50).toFloat()).duration = 10
             }
         }
-
-
         private fun checkIfObstackleGotTouched() {
             if (RectF.intersects(playerHitbox, spiderHitbox)) {
                 txtGameOver.visibility = View.VISIBLE
             }
         }
-
         private fun isCollision(player: ImageView, otherObject: ImageView): Boolean {
             val playerX = player.x
             val playerY = player.y
@@ -128,28 +122,22 @@ class GameMovement (private val imgPlayer: ImageView,
                     playerY + playerHeight >= otherY &&
                     playerY <= otherY + otherHeight
         }
-
         private fun generateImageView(imageView: ImageView, width: Int, height: Int) {
             val randomX = Random.nextInt(10, screenWidth.toInt() - width - 10)
             val randomY = Random.nextInt(10, screenHeight.toInt() - height - 10)
             imageView.x = randomX.toFloat()
             imageView.y = randomY.toFloat()
         }
-
         fun hideGameOverViews() {
             txtGameOver.visibility = View.INVISIBLE
             txtPoints.setText("0")
         }
-
         fun updateScreenSize(screenWidth: Float, screenHeight: Float) {
             this.screenWidth = layout.width.toFloat()
             this.screenHeight = layout.height.toFloat()
         }
-
         fun resetPlayerPosition() {
             imgPlayer.x = 0f
             imgPlayer.y = 0f
         }
-
-
 }
